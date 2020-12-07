@@ -72,15 +72,27 @@ class App extends React.Component {
       console.log(error);
     });
   }
-  handleDeleteProduct = (id) => {
-    const { products } = this.state;
+  
+  handleDeleteProduct = id => {
+   // const { products } = this.state;
 
-    const items = products.filter((item) => item.id !== id); // [{}]
+    const docRef = this.db.collection("products").doc(id);
 
-    this.setState({
-      products: items
-    })
-  }
+    docRef
+      .delete()
+      .then(() => {
+        console.log("Deleted sucessfully");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    // const items = products.filter(product => product.id !== id);
+
+    // this.setState({
+    //   products: items
+    // });
+  };
 
   getCartCount = () => {
     const { products } = this.state;
